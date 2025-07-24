@@ -1,0 +1,4 @@
+host: yourserver.com
+user: deploy
+key: /Users/you/.ssh/id_rsa
+remote_dir: /opt/pm
