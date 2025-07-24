@@ -1,7 +1,13 @@
 package main
 
-import "github.com/DeneesK/packet-manager/internal/config"
+import (
+	"log"
+
+	"github.com/DeneesK/packet-manager/cmd"
+)
 
 func main() {
-	conf := config.MustLoad("./")
+	if err := cmd.RootCmd.Execute(); err != nil {
+		log.Fatal(err)
+	}
 }
