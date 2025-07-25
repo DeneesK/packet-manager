@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+const perm = 0755
+
 func CreateZip(files []string, dest string) error {
 	outFile, err := os.Create(dest)
 	if err != nil {
@@ -84,7 +86,7 @@ func ExtractZip(src, dest string) error {
 			continue
 		}
 
-		if err := os.MkdirAll(filepath.Dir(fpath), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(fpath), perm); err != nil {
 			return err
 		}
 
