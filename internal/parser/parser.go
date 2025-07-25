@@ -9,6 +9,12 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+const (
+	jsonType = ".json"
+	ymlType  = ".yml"
+	yamlType = ".yaml"
+)
+
 type Target struct {
 	Path    string `json:"path" yaml:"path"`
 	Exclude string `json:"exclude,omitempty" yaml:"exclude,omitempty"`
@@ -38,9 +44,9 @@ func ParsePacketFile(path string) (*PacketFile, error) {
 	packet := &PacketFile{}
 	ext := filepath.Ext(path)
 	switch ext {
-	case ".json":
+	case jsonType:
 		err = json.Unmarshal(data, packet)
-	case ".yaml", ".yml":
+	case yamlType, ymlType:
 		err = yaml.Unmarshal(data, packet)
 	default:
 		return nil, errors.New("unsupported file format")
@@ -56,9 +62,9 @@ func ParsePackagesFile(path string) (*PackagesFile, error) {
 	pkgs := &PackagesFile{}
 	ext := filepath.Ext(path)
 	switch ext {
-	case ".json":
+	case jsonType:
 		err = json.Unmarshal(data, pkgs)
-	case ".yaml", ".yml":
+	case yamlType, ymlType:
 		err = yaml.Unmarshal(data, pkgs)
 	default:
 		return nil, errors.New("unsupported file format")
