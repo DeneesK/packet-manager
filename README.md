@@ -1,6 +1,7 @@
 # Packet Manager
 
 [![Go Test](https://github.com/Deneesk/packet-manager/actions/workflows/pm-tests.yml/badge.svg)](https://github.com/Deneesk/packet-manager/actions/workflows/pm-tests.yml.yml)
+![Go version](https://img.shields.io/badge/go-1.23-blue)
 
 Утилита для пакетной упаковки файлов, загрузки и скачивания архивов по SSH с поддержкой JSON/YAML конфигураций.
 
@@ -52,7 +53,7 @@ go build -o pm main.go
 - help        Help about any command
 - update      Download and extract archives from server
 
-#### Flags:
+- #### Flags:
   -c, --config string   Path to config file (default "./config.yaml")\
   -h, --help            help for pm
 
