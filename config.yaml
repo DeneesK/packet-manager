@@ -1,4 +1,4 @@
-host: yourserver.com
+host: localhost:2222
 user: deploy
-key: /Users/you/.ssh/id_rsa
-remote_dir: /opt/pm
+key: ./docker-sftp/ssh-keys/id_rsa
+remote_dir: /home/deploy/uploads

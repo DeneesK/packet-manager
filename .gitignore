@@ -27,3 +27,7 @@ vendor/
 
 # Static
 *.zip
+
+# For testing
+Dockerfile
+docker-sftp/
