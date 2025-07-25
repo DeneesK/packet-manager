@@ -46,5 +46,15 @@ go build -o pm main.go
 ```./pm update ./packet.json```\
 ```./pm update ./packet.json -c ./path-to-your-config.yaml```
 
+### Available Commands:
+- completion  Generate the autocompletion script for the specified shell
+- create      Create archive and upload
+- help        Help about any command
+- update      Download and extract archives from server
+
+#### Flags:
+  -c, --config string   Path to config file (default "./config.yaml")\
+  -h, --help            help for pm
+
 ### Тесты
 - Автоматический запуск тестов через GitHub Actions при push
