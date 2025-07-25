@@ -34,7 +34,7 @@ remote_dir: "/remote/archive/dir"
 ```bash
 git clone https://github.com/yourusername/packet-manager.git
 cd packet-manager
-go build -o pm ./cmd
+go build -o pm main.go
 ```
 
 ### Использование
