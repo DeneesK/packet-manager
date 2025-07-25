@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,6 +17,10 @@ import (
 const (
 	perm   = 0755
 	suffix = ".zip"
+)
+
+var (
+	destDir string
 )
 
 var updateCmd = &cobra.Command{
@@ -42,26 +46,34 @@ var updateCmd = &cobra.Command{
 			return err
 		}
 
-		downloadDir := "downloads"
-		extractDir := "extracted"
-		os.MkdirAll(downloadDir, perm)
-		os.MkdirAll(extractDir, perm)
+		if destDir == "" {
+			destDir = "./"
+		} else {
+			if err := os.MkdirAll(destDir, perm); err != nil {
+				return err
+			}
+		}
 
 		for _, dep := range pkgs.Packages {
 			for _, file := range remoteFiles {
 				if matchVersion(file, dep.Name, dep.Ver) {
-					localPath := filepath.Join(downloadDir, file)
+					tmpDir := os.TempDir()
+					localPath := filepath.Join(tmpDir, file)
 					remotePath := filepath.Join(cfg.RemoteDir, file)
 
-					fmt.Println("Downloading", file)
+					log.Println("Downloading", file, "to", localPath)
 					if err := client.Download(remotePath, localPath); err != nil {
 						return err
 					}
 
-					destDir := filepath.Join(extractDir, dep.Name)
-					fmt.Println("Extracting to", destDir)
-					if err := archiver.ExtractZip(localPath, destDir); err != nil {
+					extractPath := filepath.Join(destDir, dep.Name)
+					log.Println("Extracting", localPath, "to", extractPath)
+					if err := archiver.ExtractZip(localPath, extractPath); err != nil {
 						return err
+					}
+
+					if err := os.Remove(localPath); err != nil {
+						log.Printf("Warning: failed to delete archive %s: %v", localPath, err)
 					}
 				}
 			}
@@ -79,7 +91,6 @@ func matchVersion(file, name, constraint string) bool {
 	}
 
 	if !strings.HasPrefix(file, prefix) {
-
 		return false
 	}
 
@@ -103,5 +114,6 @@ func matchVersion(file, name, constraint string) bool {
 }
 
 func init() {
+	updateCmd.Flags().StringVarP(&destDir, "dest", "d", "", "Directory to extract packages to (default: ./)")
 	RootCmd.AddCommand(updateCmd)
 }

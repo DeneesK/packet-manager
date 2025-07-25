@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 	"path/filepath"
 
 	"github.com/DeneesK/packet-manager/internal/archiver"
@@ -14,7 +15,7 @@ import (
 )
 
 var createCmd = &cobra.Command{
-	Use:   "create <packet.json>",
+	Use:   "create <packages.json|packages.yaml>",
 	Short: "Create archive and upload",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -40,8 +41,15 @@ var createCmd = &cobra.Command{
 			Host: cfg.Host, User: cfg.User, Key: cfg.Key,
 		}
 		remotePath := filepath.Join(cfg.RemoteDir, archiveName)
-		fmt.Println("Uploading:", archiveName)
-		return client.Upload(archiveName, remotePath)
+		log.Println("Uploading:", archiveName)
+		err = client.Upload(archiveName, remotePath)
+		if err != nil {
+			return err
+		}
+		if err = os.Remove(archiveName); err != nil {
+			log.Printf("Warning: failed to remove local archive %s: %v\n", archiveName, err)
+		}
+		return err
 	},
 }
 

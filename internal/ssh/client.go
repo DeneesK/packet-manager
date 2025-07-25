@@ -34,7 +34,7 @@ func (c *SSHClient) connect() (*sftp.Client, error) {
 		HostKeyCallback: gossh.InsecureIgnoreHostKey(),
 	}
 
-	conn, err := gossh.Dial("tcp", c.Host+":22", config)
+	conn, err := gossh.Dial("tcp", c.Host, config)
 	if err != nil {
 		return nil, fmt.Errorf("dial ssh: %w", err)
 	}

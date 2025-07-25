@@ -31,3 +31,7 @@ vendor/
 # For testing
 Dockerfile
 docker-sftp/
+packet.yaml
+archive_this*
+packages.json
+pm

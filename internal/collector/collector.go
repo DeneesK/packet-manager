@@ -3,6 +3,7 @@ package collector
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"path/filepath"
 )
 
@@ -32,7 +33,19 @@ func CollectFiles(targets []interface{}) ([]string, error) {
 		if err != nil {
 			return nil, err
 		}
-		matches, _ := filepath.Glob(t.Path)
+
+		pattern := t.Path
+
+		info, err := os.Stat(pattern)
+		if err == nil && info.IsDir() {
+			pattern = filepath.Join(pattern, "*")
+		}
+
+		matches, err := filepath.Glob(pattern)
+		if err != nil {
+			return nil, err
+		}
+
 		for _, f := range matches {
 			if t.Exclude != "" && matchExclude(f, t.Exclude) {
 				continue
