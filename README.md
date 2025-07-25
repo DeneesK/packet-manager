@@ -1,6 +1,6 @@
 # Packet Manager
 
-[![Go Test](https://github.com/yourusername/packet-manager/actions/workflows/pm-tests.yml/badge.svg)](https://github.com/yourusername/packet-manager/actions/workflows/pm-tests.yml.yml)
+[![Go Test](https://github.com/Deneesk/packet-manager/actions/workflows/pm-tests.yml/badge.svg)](https://github.com/Deneesk/packet-manager/actions/workflows/pm-tests.yml.yml)
 
 Утилита для пакетной упаковки файлов, загрузки и скачивания архивов по SSH с поддержкой JSON/YAML конфигураций.
 
