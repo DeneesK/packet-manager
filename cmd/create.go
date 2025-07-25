@@ -8,7 +8,6 @@ import (
 
 	"github.com/DeneesK/packet-manager/internal/archiver"
 	"github.com/DeneesK/packet-manager/internal/collector"
-	"github.com/DeneesK/packet-manager/internal/config"
 	"github.com/DeneesK/packet-manager/internal/parser"
 	"github.com/DeneesK/packet-manager/internal/ssh"
 	"github.com/spf13/cobra"
@@ -35,7 +34,6 @@ var createCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		cfg := config.MustLoad("./config.yaml")
 
 		client := &ssh.SSHClient{
 			Host: cfg.Host, User: cfg.User, Key: cfg.Key,

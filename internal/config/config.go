@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log"
 	"os"
 
 	"gopkg.in/yaml.v3"
@@ -14,15 +13,15 @@ type Config struct {
 	RemoteDir string `yaml:"remote_dir"`
 }
 
-func MustLoad(path string) *Config {
+func Load(path string) (*Config, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		log.Fatalf("Failed to load config: %v", err)
+		return nil, err
 	}
 	cfg := &Config{}
 	err = yaml.Unmarshal(data, cfg)
 	if err != nil {
-		log.Fatalf("Failed to decode config: %v", err)
+		return nil, err
 	}
-	return cfg
+	return cfg, nil
 }

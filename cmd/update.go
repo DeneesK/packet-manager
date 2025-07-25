@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/DeneesK/packet-manager/internal/archiver"
-	"github.com/DeneesK/packet-manager/internal/config"
 	"github.com/DeneesK/packet-manager/internal/parser"
 	"github.com/DeneesK/packet-manager/internal/ssh"
 	"github.com/Masterminds/semver/v3"
@@ -32,8 +31,6 @@ var updateCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-
-		cfg := config.MustLoad("./config.yaml")
 
 		client := &ssh.SSHClient{
 			Host: cfg.Host,
